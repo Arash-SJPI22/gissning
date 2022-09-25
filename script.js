@@ -10,7 +10,7 @@ const showResult = document.querySelector("#showResult");
 const numberOfTries = document.querySelector("#numberOfTries");
 
 // Sets the variables för witch index of the array of questions the user currently is on, the number of tries and right answers
-let witchQuestion = 0, tries = 0, rightAnswers = 0;
+let whichQuestion = 0, tries = 0, rightAnswers = 0;
 
 // The array of objects with questions and their answers
 const questions = [
@@ -29,16 +29,16 @@ const questions = [
 ];
 
 // When the page loads displays the first question
-showQuestion.innerHTML = questions[witchQuestion].question + "?";
+showQuestion.innerHTML = questions[whichQuestion].question + "?";
 // When the page loads changes the maxLength of the input text field to match the max lenght of the first answer
-answerInput.maxLength = questions[witchQuestion].answer.length;
+answerInput.maxLength = questions[whichQuestion].answer.length;
 
 // When the checkAnswer button is clicked this function checks if the answer is right
 checkAnswer.addEventListener("click", () => {
     // If the userinputs answer converted to lowercase is equal to the answer in lowercase then proced
-    if (answerInput.value.toLowerCase() == questions[witchQuestion].answer.toLowerCase()) {
+    if (answerInput.value.toLowerCase() == questions[whichQuestion].answer.toLowerCase()) {
         // If question counter is equal to the last index of the array (if the answer was correct was just checked) display the results and disable the button
-        if (witchQuestion == questions.length -1) {
+        if (whichQuestion == questions.length -1) {
             rightAnswers++;
             tries++;
             showResult.innerHTML = "Rätt svar! Det var sista frågan!";
@@ -46,24 +46,24 @@ checkAnswer.addEventListener("click", () => {
             checkAnswer.innerHTML = "Börja om";
             // Restes all the values so it begins from the start again
             checkAnswer.addEventListener("click", () => {
-                witchQuestion = 0;
+                whichQuestion = 0;
                 tries = 0;
                 rightAnswers = 0;
                 answerInput.value = "";
                 answerInput.placeholder = "Skriv ditt svar här!";
-                answerInput.maxLength = questions[witchQuestion].answer.length;
-                showQuestion.innerHTML = questions[witchQuestion].question;
+                answerInput.maxLength = questions[whichQuestion].answer.length;
+                showQuestion.innerHTML = questions[whichQuestion].question;
                 numberOfTries.innerHTML = "Antal försök: " + tries;
                 showResult.innerHTML = "";
             });
         // If it is not the last answer proced with showing the nextquestion
         } else {
-            witchQuestion++;
+            whichQuestion++;
             showResult.innerHTML = "Rätt svar! Kan du även nästa fråga?";
             answerInput.value = "";
             answerInput.placeholder = "Skriv in ditt nästa svar!";
-            showQuestion.innerHTML = questions[witchQuestion].question + "?";
-            answerInput.maxLength = questions[witchQuestion].answer.length;
+            showQuestion.innerHTML = questions[whichQuestion].question + "?";
+            answerInput.maxLength = questions[whichQuestion].answer.length;
             rightAnswers++;
             tries++;
             numberOfTries.innerHTML = "Antal försök: " + tries;

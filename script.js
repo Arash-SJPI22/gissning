@@ -8,6 +8,8 @@ const answerInput = document.querySelector("#answerInput");
 const showResult = document.querySelector("#showResult");
 // The paragraph that show the numer of tries
 const numberOfTries = document.querySelector("#numberOfTries");
+// The button that is hidden until you complete the game
+const goAgainBtn = document.querySelector("#goAgainBtn");
 
 // Sets the variables för witch index of the array of questions the user currently is on, the number of tries and right answers
 let whichQuestion = 0, tries = 0, rightAnswers = 0;
@@ -30,6 +32,8 @@ const questions = [
 
 // When the page loads displays the first question
 showQuestion.innerHTML = questions[whichQuestion].question + "?";
+// When the pase loads it empties the inputfield
+answerInput.value = "";
 // When the page loads changes the maxLength of the input text field to match the max lenght of the first answer
 answerInput.maxLength = questions[whichQuestion].answer.length;
 
@@ -43,19 +47,9 @@ checkAnswer.addEventListener("click", () => {
             tries++;
             showResult.innerHTML = "Rätt svar! Det var sista frågan!";
             numberOfTries.innerHTML = "Du fick " + rightAnswers + " rätt på " + tries + " försök!";
-            checkAnswer.innerHTML = "Börja om";
-            // Restes all the values so it begins from the start again
-            checkAnswer.addEventListener("click", () => {
-                whichQuestion = 0;
-                tries = 0;
-                rightAnswers = 0;
-                answerInput.value = "";
-                answerInput.placeholder = "Skriv ditt svar här!";
-                answerInput.maxLength = questions[whichQuestion].answer.length;
-                showQuestion.innerHTML = questions[whichQuestion].question;
-                numberOfTries.innerHTML = "Antal försök: " + tries;
-                showResult.innerHTML = "";
-            });
+            //checkAnswer.innerHTML = "Börja om";
+            goAgainBtn.hidden = "";
+            checkAnswer.hidden = "hidden";
         // If it is not the last answer proced with showing the nextquestion
         } else {
             whichQuestion++;
@@ -75,3 +69,18 @@ checkAnswer.addEventListener("click", () => {
         numberOfTries.innerHTML = "Antal försök: " + tries;
     }
 }); 
+
+// Restes all the values so it begins from the start again
+goAgainBtn.addEventListener("click", () => {
+    whichQuestion = 0;
+    tries = 0;
+    rightAnswers = 0;
+    answerInput.value = "";
+    answerInput.placeholder = "Skriv ditt svar här!";
+    answerInput.maxLength = questions[whichQuestion].answer.length;
+    showQuestion.innerHTML = questions[whichQuestion].question;
+    numberOfTries.innerHTML = "Antal försök: " + tries;
+    showResult.innerHTML = "";
+    checkAnswer.hidden = "";
+    goAgainBtn.hidden = "hidden";
+});
